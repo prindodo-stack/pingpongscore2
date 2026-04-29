@@ -1,0 +1,91 @@
+:root {
+  --paper: #f8faf7;
+  --ink: #151716;
+  --muted: #5b625f;
+  --line: #d8ded9;
+  --green: #1b7f5c;
+  --blue: #265a74;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.page {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  padding: 32px 18px;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(28px, 6vw, 48px);
+  letter-spacing: 0;
+}
+
+p {
+  margin: 10px 0 28px;
+  color: var(--muted);
+  font-size: clamp(15px, 2.5vw, 20px);
+}
+
+.downloads {
+  display: grid;
+  gap: 12px;
+}
+
+.download {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 92px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  color: inherit;
+  text-decoration: none;
+}
+
+.download:hover,
+.download:focus-visible {
+  border-color: var(--green);
+  outline: none;
+}
+
+strong,
+b,
+small {
+  display: block;
+}
+
+strong {
+  font-size: clamp(20px, 3vw, 26px);
+}
+
+small {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: clamp(13px, 2vw, 16px);
+}
+
+b {
+  flex: 0 0 auto;
+  color: var(--blue);
+  font-size: clamp(14px, 2vw, 18px);
+}
+
+@media (max-width: 620px) {
+  .download {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

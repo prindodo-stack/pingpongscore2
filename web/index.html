@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>탁구 스코어</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <section class="options" aria-label="경기 설정">
+      <button id="singlesBtn" type="button">단식</button>
+      <button id="doublesBtn" type="button">복식</button>
+      <button id="set3Btn" type="button">3세트</button>
+      <button id="set5Btn" type="button">5세트</button>
+      <button id="set7Btn" type="button">7세트</button>
+      <button id="point11Btn" type="button">11점</button>
+      <button id="point15Btn" type="button">15점</button>
+      <button id="point21Btn" type="button">21점</button>
+    </section>
+
+    <div id="setInfo" class="set-info"></div>
+
+    <section class="scoreboard" aria-label="점수판">
+      <button id="leftScore" class="score score-left" type="button" aria-label="A팀 점수 추가">0</button>
+      <div class="colon">:</div>
+      <button id="rightScore" class="score score-right" type="button" aria-label="B팀 점수 추가">0</button>
+    </section>
+
+    <section class="teams" aria-label="서브 팀">
+      <div id="leftTeam" class="team">A팀</div>
+      <div id="rightTeam" class="team">B팀</div>
+    </section>
+
+    <div id="serverInfo" class="server-info"></div>
+    <div id="statusInfo" class="status-info"></div>
+
+    <section class="point-buttons" aria-label="점수 추가">
+      <button id="leftPointBtn" type="button">A +1</button>
+      <button id="rightPointBtn" type="button">B +1</button>
+    </section>
+
+    <section class="tools" aria-label="경기 도구">
+      <button id="undoBtn" type="button">취소</button>
+      <button id="speakBtn" type="button">서브</button>
+      <button id="nextSetBtn" type="button">다음</button>
+      <button id="resetBtn" type="button">새경기</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
