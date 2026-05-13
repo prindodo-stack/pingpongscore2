@@ -36,11 +36,12 @@ button {
 
 .app {
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto auto auto auto auto;
-  gap: clamp(3px, 0.7vh, 8px);
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto auto auto;
+  gap: clamp(2px, 0.55vh, 7px);
   width: 100vw;
-  height: 100vh;
-  padding: clamp(4px, 1vw, 10px);
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: clamp(3px, 0.8vw, 9px);
 }
 
 .options,
@@ -60,7 +61,7 @@ button {
 }
 
 .tools {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .teams {
@@ -69,11 +70,11 @@ button {
 
 .options button,
 .tools button {
-  min-height: clamp(24px, 4.5vh, 34px);
-  padding: 0 4px;
+  min-height: clamp(22px, 4vh, 32px);
+  padding: 0 2px;
   background: var(--soft);
   color: #242a27;
-  font-size: clamp(10px, 1.7vw, 15px);
+  font-size: clamp(9px, 1.55vw, 14px);
   font-weight: 700;
 }
 
@@ -115,7 +116,7 @@ button {
   padding: 0;
   background: var(--soft);
   color: var(--ink);
-  font-size: min(41vh, 29vw);
+  font-size: min(43vh, 31vw);
   font-weight: 950;
   line-height: 0.86;
   letter-spacing: 0;
@@ -137,7 +138,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: min(18vh, 10vw);
+  font-size: min(16vh, 8vw);
   font-weight: 950;
   line-height: 1;
 }
@@ -169,7 +170,7 @@ button {
 }
 
 .point-buttons button {
-  min-height: clamp(34px, 6.8vh, 58px);
+  min-height: clamp(30px, 6vh, 54px);
   color: white;
   font-size: clamp(15px, 2.5vw, 24px);
   font-weight: 900;
@@ -206,10 +207,49 @@ button:disabled {
 
 @media (orientation: portrait) {
   .score {
-    font-size: min(34vh, 37vw);
+    font-size: min(31vh, 38vw);
   }
 
   .scoreboard {
     grid-template-columns: minmax(0, 1fr) clamp(14px, 5vw, 42px) minmax(0, 1fr);
+  }
+}
+
+@media (max-height: 560px), (max-width: 420px) {
+  .app {
+    gap: 2px;
+    padding: 3px;
+  }
+
+  .options button,
+  .tools button {
+    min-height: 22px;
+    font-size: 9px;
+  }
+
+  .set-info {
+    font-size: 11px;
+  }
+
+  .server-info {
+    font-size: 15px;
+  }
+
+  .status-info {
+    font-size: 10px;
+  }
+
+  .team {
+    font-size: 13px;
+  }
+
+  .team.serving-left,
+  .team.serving-right {
+    font-size: 15px;
+  }
+
+  .point-buttons button {
+    min-height: 28px;
+    font-size: 14px;
   }
 }

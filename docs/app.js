@@ -32,12 +32,13 @@ const els = {
   rightPointBtn: $("rightPointBtn"),
   undoBtn: $("undoBtn"),
   speakBtn: $("speakBtn"),
+  resetSetBtn: $("resetSetBtn"),
   nextSetBtn: $("nextSetBtn"),
   resetBtn: $("resetBtn"),
 };
 
-function saveState() {
-  state.history.push({
+function snapshot() {
+  return {
     gamePoint: state.gamePoint,
     leftScore: state.leftScore,
     rightScore: state.rightScore,
@@ -45,16 +46,29 @@ function saveState() {
     rightSets: state.rightSets,
     targetSets: state.targetSets,
     doublesMode: state.doublesMode,
-  });
+  };
+}
+
+function saveState() {
+  state.history.push(snapshot());
 }
 
 function winsNeeded() {
   return Math.floor(state.targetSets / 2) + 1;
 }
 
+function currentSetNumber() {
+  return state.leftSets + state.rightSets + 1;
+}
+
+function serverCount() {
+  return state.doublesMode ? 4 : 2;
+}
+
 function currentServerIndex() {
-  const serverCount = state.doublesMode ? 4 : 2;
-  return Math.floor((state.leftScore + state.rightScore) / 2) % serverCount;
+  const startIndex = (currentSetNumber() - 1) % serverCount();
+  const turnOffset = Math.floor((state.leftScore + state.rightScore) / 2);
+  return (startIndex + turnOffset) % serverCount();
 }
 
 function isLeftServing() {
@@ -62,14 +76,16 @@ function isLeftServing() {
 }
 
 function currentServerLabel() {
-  if (state.doublesMode) {
-    return `${currentServerIndex() + 1}번(${isLeftServing() ? "A팀" : "B팀"})`;
-  }
-  return isLeftServing() ? "1번(A팀)" : "2번(B팀)";
+  const team = isLeftServing() ? "A팀" : "B팀";
+  return `${currentServerIndex() + 1}번(${team})`;
 }
 
 function currentServerVoiceLabel() {
   return `${currentServerIndex() + 1}번`;
+}
+
+function scoreVoicePrefix() {
+  return `${state.leftScore}:${state.rightScore}`;
 }
 
 function isGameOver() {
@@ -100,7 +116,7 @@ function speakServer(force = false) {
   } else if (isGameOver()) {
     speak(`${state.leftScore > state.rightScore ? "A팀" : "B팀"} 세트 승리입니다`);
   } else {
-    speak(`${currentServerVoiceLabel()} 서브`);
+    speak(`${scoreVoicePrefix()} ${currentServerVoiceLabel()} 서브`);
   }
 }
 
@@ -115,9 +131,11 @@ function addPoint(leftTeam) {
     else state.rightSets += 1;
   }
 
+  const previousServer = state.lastServerIndex;
   render();
-  const total = state.leftScore + state.rightScore;
-  if (total % 2 === 0 || isGameOver()) speakServer(true);
+  if (currentServerIndex() !== previousServer || isGameOver()) {
+    speakServer(true);
+  }
 }
 
 function changeMode(doubles) {
@@ -146,6 +164,20 @@ function changeGamePoint(gamePoint) {
 function nextSet() {
   if (!isGameOver() || isMatchOver()) return;
   saveState();
+  state.leftScore = 0;
+  state.rightScore = 0;
+  state.lastServerIndex = -1;
+  render();
+  speakServer(true);
+}
+
+function resetSet() {
+  if (state.leftScore === 0 && state.rightScore === 0) return;
+  saveState();
+  if (isGameOver()) {
+    if (state.leftScore > state.rightScore) state.leftSets = Math.max(0, state.leftSets - 1);
+    else state.rightSets = Math.max(0, state.rightSets - 1);
+  }
   state.leftScore = 0;
   state.rightScore = 0;
   state.lastServerIndex = -1;
@@ -189,7 +221,7 @@ function render() {
   els.leftTeam.classList.toggle("serving-left", leftServing);
   els.rightTeam.classList.toggle("serving-right", !leftServing);
 
-  els.setInfo.textContent = `${state.doublesMode ? "복식" : "단식"}  ${state.leftSets}:${state.rightSets}  ${state.targetSets}세트/${winsNeeded()}선승  ${state.gamePoint}점`;
+  els.setInfo.textContent = `${state.doublesMode ? "복식" : "단식"}  ${currentSetNumber()}세트  ${state.leftSets}:${state.rightSets}  ${state.targetSets}세트/${winsNeeded()}선승  ${state.gamePoint}점`;
   els.serverInfo.textContent = `${currentServerLabel()} 서브`;
 
   if (isMatchOver()) {
@@ -208,6 +240,7 @@ function render() {
   els.leftPointBtn.disabled = !scoringEnabled;
   els.rightPointBtn.disabled = !scoringEnabled;
   els.nextSetBtn.disabled = !isGameOver() || isMatchOver();
+  els.resetSetBtn.disabled = state.leftScore === 0 && state.rightScore === 0;
   els.undoBtn.disabled = state.history.length === 0;
 
   setSelected(els.singlesBtn, !state.doublesMode);
@@ -236,6 +269,7 @@ els.point15Btn.addEventListener("click", () => changeGamePoint(15));
 els.point21Btn.addEventListener("click", () => changeGamePoint(21));
 els.undoBtn.addEventListener("click", undo);
 els.speakBtn.addEventListener("click", () => speakServer(true));
+els.resetSetBtn.addEventListener("click", resetSet);
 els.nextSetBtn.addEventListener("click", nextSet);
 els.resetBtn.addEventListener("click", resetMatch);
 
