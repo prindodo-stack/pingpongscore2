@@ -6,6 +6,9 @@
   --green: #1b7f5c;
   --red: #c73e45;
   --blue: #265a74;
+  --mode: #265a74;
+  --set: #7a5a14;
+  --point: #7d3f67;
 }
 
 * {
@@ -53,7 +56,29 @@ button {
 }
 
 .options {
-  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-columns: 2fr 3fr 3fr;
+}
+
+.option-group {
+  display: grid;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 7px;
+}
+
+.mode-group {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  background: rgba(38, 90, 116, 0.16);
+}
+
+.set-group {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: rgba(122, 90, 20, 0.18);
+}
+
+.point-group {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: rgba(125, 63, 103, 0.16);
 }
 
 .point-buttons {
@@ -79,8 +104,19 @@ button {
 }
 
 .options button.selected {
-  background: var(--blue);
   color: white;
+}
+
+.mode-group button.selected {
+  background: var(--mode);
+}
+
+.set-group button.selected {
+  background: var(--set);
+}
+
+.point-group button.selected {
+  background: var(--point);
 }
 
 .set-info,
@@ -225,6 +261,10 @@ button:disabled {
   .tools button {
     min-height: 22px;
     font-size: 9px;
+  }
+
+  .options {
+    grid-template-columns: 1fr;
   }
 
   .set-info {

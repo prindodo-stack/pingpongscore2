@@ -81,11 +81,11 @@ function currentServerLabel() {
 }
 
 function currentServerVoiceLabel() {
-  return `${currentServerIndex() + 1}번`;
+  return ["일번", "이번", "삼번", "사번"][currentServerIndex()];
 }
 
 function scoreVoicePrefix() {
-  return `${state.leftScore}:${state.rightScore}`;
+  return `${state.leftScore} 대 ${state.rightScore}`;
 }
 
 function isGameOver() {
@@ -116,7 +116,7 @@ function speakServer(force = false) {
   } else if (isGameOver()) {
     speak(`${state.leftScore > state.rightScore ? "A팀" : "B팀"} 세트 승리입니다`);
   } else {
-    speak(`${scoreVoicePrefix()} ${currentServerVoiceLabel()} 서브`);
+    speak(`${scoreVoicePrefix()}, 서브 변경, ${currentServerVoiceLabel()} 서브`);
   }
 }
 

@@ -9,14 +9,20 @@
 <body>
   <main class="app">
     <section class="options" aria-label="경기 설정">
-      <button id="singlesBtn" type="button">단식</button>
-      <button id="doublesBtn" type="button">복식</button>
-      <button id="set3Btn" type="button">S3</button>
-      <button id="set5Btn" type="button">S5</button>
-      <button id="set7Btn" type="button">S7</button>
-      <button id="point11Btn" type="button">11</button>
-      <button id="point15Btn" type="button">15</button>
-      <button id="point21Btn" type="button">21</button>
+      <div class="option-group mode-group" aria-label="경기 방식">
+        <button id="singlesBtn" type="button">단식</button>
+        <button id="doublesBtn" type="button">복식</button>
+      </div>
+      <div class="option-group set-group" aria-label="세트 선택">
+        <button id="set3Btn" type="button">S3</button>
+        <button id="set5Btn" type="button">S5</button>
+        <button id="set7Btn" type="button">S7</button>
+      </div>
+      <div class="option-group point-group" aria-label="점수 선택">
+        <button id="point11Btn" type="button">11</button>
+        <button id="point15Btn" type="button">15</button>
+        <button id="point21Btn" type="button">21</button>
+      </div>
     </section>
 
     <div id="setInfo" class="set-info"></div>
